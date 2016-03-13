@@ -11,16 +11,9 @@ namespace Task2
         /// <summary>
         /// Return the greatest common divisor (GCD) of two numbers
         /// </summary>
-        public static int Gcd(int number1, int number2)
+        static int Gcd(int number1, int number2)
         {
-            while (number1 != 0 && number2 != 0)
-            {
-                if (number1 > number2)
-                    number1 %= number2;
-                else
-                    number2 %= number1;
-            }
-            return number1 == 0 ? number2 : number1;
+            return number2 == 0 ? number1 : Gcd(number2, number1 % number2);
         }
         /// <summary>
         /// Return the greatest common divisor (GCD) of two numbers with the time complexity 
@@ -37,6 +30,11 @@ namespace Task2
             time.Stop();
             return result;
         }
-        
+
+        public static int Gcd(params int[] numbers)
+        {
+            
+        }
+
     }
 }
