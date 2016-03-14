@@ -22,7 +22,7 @@ namespace Task4
 
         public override string ToString()
         {
-            return this.ToString("F", CultureInfo.CurrentCulture);
+            return this.ToString("F", CultureInfo.InvariantCulture);
         }
 
         public string ToString(string format)
