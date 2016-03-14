@@ -11,11 +11,14 @@ namespace Task2.Tests
     [TestFixture]
     public class MathOperationsTests
     {
+    #region Gcd tests
+
         [Test]
         [TestCase(64, 48, Result = 16)]
         [TestCase(1024, 24, Result = 8)]
         [TestCase(673, 71, Result = 1)]
         [TestCase(648, 324, Result = 324)]
+        [TestCase(0, 15, Result = 15)]
         public int Gcd_Numbers_ReturnedTheGreatestCommonDivisor(int number1, int number2)
         {
             return MathOperations.Gcd(number1, number2);
@@ -49,10 +52,10 @@ namespace Task2.Tests
         {
             Stopwatch time;
 
-            int result = MathOperations.Gcd(out time, 12648, 754, 12534230);
+            int result = MathOperations.Gcd(out time, 116150, 232704, 202);
             Debug.WriteLine($"Total time: {time.Elapsed.TotalMilliseconds}ms");
 
-            Assert.AreEqual(2, result);
+            Assert.AreEqual(202, result);
         }
 
         [Test]
@@ -70,6 +73,41 @@ namespace Task2.Tests
 
             Assert.AreEqual(number, result);
         }
+    #endregion
 
+    #region GcdBinary tests
+        [Test]
+        [TestCase(64, 48, Result = 16)]
+        [TestCase(1024, 24, Result = 8)]
+        [TestCase(673, 71, Result = 1)]
+        [TestCase(648, 324, Result = 324)]
+        [TestCase(0, 15, Result = 15)]
+        public int GcdBinary_Numbers_ReturnedTheGreatestCommonDivisor(int number1, int number2)
+        {
+            return MathOperations.GcdBinary(number1, number2);
+        }
+
+        [Test]
+        [TestCase(64, 48, 128, 256, Result = 16)]
+        [TestCase(2, 673, 21, Result = 1)]
+        [TestCase(560, 0, 0, Result = 560)]
+        [TestCase(40, 80, 60, Result = 20)]
+        [TestCase(new int[] { }, ExpectedException = (typeof(ArgumentException)))]
+        public int GcdBinary_MultipleNumbers_ReturnedTheGreatestCommonDivisor(params int[] numbers)
+        {
+            return MathOperations.GcdBinary(numbers);
+        }
+
+        [Test]
+        public void GcdBinary_MultipleNumbersWithTotalTime_ReturnedTheGreatestCommonDivisor()
+        {
+            Stopwatch time;
+
+            int result = MathOperations.GcdBinary(out time, 116150, 232704, 202);
+            Debug.WriteLine($"Total time: {time.Elapsed.TotalMilliseconds}ms");
+
+            Assert.AreEqual(202, result);
+        }
+    #endregion
     }
 }
