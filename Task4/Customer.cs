@@ -36,21 +36,28 @@ namespace Task4
             if (string.IsNullOrEmpty(format)) format = "F";
             if (formatProvider == null) formatProvider = CultureInfo.InvariantCulture;
             NumberFormatInfo decFormatInfo = new NumberFormatInfo();
+            string result = "Customer record: ";
             switch (format.ToUpperInvariant())
             {
                 case "F":
-                    return Name + ", " + Revenue.ToString("#,###,###.00", formatProvider) + ", " + ContactPhone;
+                    result += Name + ", " + Revenue.ToString("#,###,###.00", formatProvider) + ", " + ContactPhone;
+                    break;
                 case "N":
-                    return Name;
+                    result += Name;
+                    break;
                 case "T":
-                    return ContactPhone;
+                    result += ContactPhone;
+                    break;
                 case "R":
-                    return Revenue.ToString(formatProvider);
+                    result += Revenue.ToString(formatProvider);
+                    break;
                 case "NR":
-                    return Name + ", " + Revenue.ToString("#,###,###.00", formatProvider);
+                    result += Name + ", " + Revenue.ToString("#,###,###.00", formatProvider);
+                    break;
                 default:
                     throw new FormatException(String.Format("The {0} format string is not supported.", format));
             }
+            return result;
         }
     }
 }
