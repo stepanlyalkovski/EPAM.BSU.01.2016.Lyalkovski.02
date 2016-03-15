@@ -11,7 +11,7 @@ namespace Task2.Tests
     [TestFixture]
     public class MathOperationsTests
     {
-    #region Gcd tests
+    #region EuclideanGcd tests
 
         [Test]
         [TestCase(64, 48, Result = 16)]
@@ -29,10 +29,10 @@ namespace Task2.Tests
         {
             int number1 = 50468;
             int number2 = 12456;
-            Stopwatch time;
+            double time;
 
             int result =  MathOperations.Gcd(number1, number2, out time);
-            Debug.WriteLine($"Total time: {time.Elapsed.TotalMilliseconds}ms");
+            Debug.WriteLine($"Total time: {time}ms");
 
             Assert.AreEqual(4, result);           
         }
@@ -45,17 +45,6 @@ namespace Task2.Tests
         public int Gcd_MultipleNumbers_ReturnedTheGreatestCommonDivisor(params int[] numbers)
         {
             return MathOperations.Gcd(numbers);
-        }
-
-        [Test]
-        public void Gcd_MultipleNumbersWithTotalTime_ReturnedTheGreatestCommonDivisor()
-        {
-            Stopwatch time;
-
-            int result = MathOperations.Gcd(out time, 116150, 232704, 202);
-            Debug.WriteLine($"Total time: {time.Elapsed.TotalMilliseconds}ms");
-
-            Assert.AreEqual(202, result);
         }
 
         [Test]
@@ -99,12 +88,23 @@ namespace Task2.Tests
         }
 
         [Test]
-        public void GcdBinary_MultipleNumbersWithTotalTime_ReturnedTheGreatestCommonDivisor()
+        public void Gcd_MultipleNumbersWithTotalTime_ReturnedTheGreatestCommonDivisor()
         {
-            Stopwatch time;
+            double time;
 
             int result = MathOperations.GcdBinary(out time, 116150, 232704, 202);
-            Debug.WriteLine($"Total time: {time.Elapsed.TotalMilliseconds}ms");
+            Debug.WriteLine($"Total time: {time}ms");
+
+            Assert.AreEqual(202, result);
+        }
+
+        [Test]
+        public void GcdBinary_MultipleNumbersWithTotalTime_ReturnedTheGreatestCommonDivisor()
+        {
+            double time;
+
+            int result = MathOperations.GcdBinary(out time, 116150, 232704, 202);
+            Debug.WriteLine($"Total time: {time}ms");
 
             Assert.AreEqual(202, result);
         }
