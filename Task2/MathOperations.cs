@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 
 namespace Task2
@@ -11,15 +12,60 @@ namespace Task2
     public static class MathOperations
     {
         /// <summary>
-        /// Return the greatest common divisor (GCD) of two numbers
+        /// Euclidean algorithm 
         /// </summary>
-        private static int Gcd(int number1, int number2)
+        /// <param name="number1"></param>
+        /// <param name="number2"></param>
+        /// <returns>the greatest common divisor (GCD) of two numbers</returns>
+        public static int Gcd(int number1, int number2)
         {
             //Debug.WriteLine($"{number1} {number2}");
             return number2 == 0 ? number1 : Gcd(number2, number1 % number2);
         }
+      
+        /// <summary>
+        /// Return the greatest common divisor (GCD) of two numbers with the time complexity 
+        /// of Euclidean algorithm
+        /// </summary>
+        /// <param name="number1"></param>
+        /// <param name="number2"></param>
+        /// <param name="elapsedTime">Algorithm time</param>
+        /// <returns>the greatest common divisor(GCD)</returns>
+        public static int Gcd(int number1, int number2, out double elapsedTime)
+        {
+            Stopwatch totalTime = Stopwatch.StartNew();
+            int result = Gcd(number1, number2);
+            elapsedTime = totalTime.Elapsed.TotalMilliseconds;
+            return result;
+        }
 
-        private static int SteinGcd(int number1, int number2)
+        public static int Gcd(int number1, int number2, int number3) => Gcd(Gcd(number1, number2), number3);
+
+        public static int Gcd(int number1, int number2, int number3, out double elapsedTime)
+        {
+            Stopwatch totalTime = Stopwatch.StartNew();
+            int result = Gcd(Gcd(number1, number2), number3);
+            elapsedTime = totalTime.Elapsed.TotalMilliseconds;
+            return result;
+        }
+
+        public static int Gcd(params int[] numbers)
+        {
+            if (numbers == null || numbers.Length == 0)
+                throw new ArgumentException("Number of arguments is empty or equals null");
+
+            return numbers.Aggregate(Gcd);
+        } 
+
+        public static int Gcd(out double elapsedTime, params int[] numbers)
+        {
+            Stopwatch totalime = Stopwatch.StartNew();
+            int result = numbers.Aggregate(Gcd);
+            elapsedTime = totalime.Elapsed.TotalMilliseconds;
+            return result;
+        }
+
+        public static int GcdBinary(int number1, int number2)
         {
             if (number1 < 0) number1 *= -1;
             if (number2 < 0) number2 *= -1;
@@ -43,55 +89,33 @@ namespace Task2
                 return GcdBinary(number1, (number2 - number1) >> 1);
         }
 
-        /// <summary>
-        /// Return the greatest common divisor (GCD) of two numbers with the time complexity 
-        /// of Euclidean algorithm
-        /// </summary>
-        /// <param name="number1"></param>
-        /// <param name="number2"></param>
-        /// <param name="elapsedTime"></param>
-        /// <returns>the greatest common divisor(GCD)</returns>
-        public static int Gcd(int number1, int number2, out double elapsedTime)
+        public static int GcdBinary(int number1, int number2, int number3) => GcdBinary(GcdBinary(number1, number2), number3);
+
+        public static int GcdBinary(int number1, int number2, int number3, out double elapsedTime)
         {
             Stopwatch totalTime = Stopwatch.StartNew();
-            int result = Gcd(number1, number2);
+            int result = GcdBinary(GcdBinary(number1, number2), number3);
             elapsedTime = totalTime.Elapsed.TotalMilliseconds;
             return result;
         }
-
-        public static int Gcd(params int[] numbers)
-        {
-            if (numbers == null || numbers.Length == 0)
-                throw new ArgumentException("Number of arguments is empty or equals null");
-
-            return numbers.Aggregate(Gcd);
-        } 
-
-        public static int Gcd(out double elapsedTime, params int[] numbers)
-        {
-            Stopwatch totalime = Stopwatch.StartNew();
-            int result = numbers.Aggregate(Gcd);
-            elapsedTime = totalime.Elapsed.TotalMilliseconds;
-            return result;
-        }
-        // temporary solution
-        public static int GcdBinary(int number1, int number2) => SteinGcd(number1, number2);
 
         public static int GcdBinary(params int[] numbers)
         {
             if (numbers == null || numbers.Length == 0)
                 throw new ArgumentException("Number of arguments is empty or equals null");
 
-            return numbers.Aggregate(SteinGcd);
+            return numbers.Aggregate(GcdBinary);
         }
 
         public static int GcdBinary(out double elapsedTime, params int[] numbers)
         {
             Stopwatch totalTime = Stopwatch.StartNew();
-            int result = numbers.Aggregate(SteinGcd);
+            int result = numbers.Aggregate(GcdBinary);
             elapsedTime = totalTime.Elapsed.TotalMilliseconds;
             return result;
         }
+
+
         
     }
 }
