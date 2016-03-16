@@ -35,7 +35,6 @@ namespace Task4
         {
             if (string.IsNullOrEmpty(format)) format = "F";
             if (formatProvider == null) formatProvider = CultureInfo.InvariantCulture;
-            NumberFormatInfo decFormatInfo = new NumberFormatInfo();
             string result = "Customer record: ";
             switch (format.ToUpperInvariant())
             {
